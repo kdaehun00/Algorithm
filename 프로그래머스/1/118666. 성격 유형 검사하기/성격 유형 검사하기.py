@@ -1,22 +1,28 @@
-def solution(survey, choices):
-    scores = {ch: 0 for ch in "RTCFJMAN"}
-    
-    for s, c in zip(survey, choices):
-        disagree, agree = s[0], s[1]
-        if c < 4:
-            scores[disagree] += 4 - c
-        elif c > 4:
-            scores[agree] += c - 4
-    
-    result = ""
-    pairs = [("R", "T"), ("C", "F"), ("J", "M"), ("A", "N")]
-    
-    for a, b in pairs:
-        if scores[a] > scores[b]:
-            result += a
-        elif scores[a] < scores[b]:
-            result += b
-        else:
-            result += min(a, b)
+from collections import defaultdict
 
-    return result
+def solution(survey, choices):
+    answer = ''
+    mbti_list = [['R', 'T'], ['C', 'F'], ['J', 'M'], ['A', 'N']]
+    set_score = 4
+    db = defaultdict(int)
+    
+    for data, score in zip(survey, choices):
+        a = data[0]
+        b = data[1]
+        
+        if score <= 4:
+            db[a] += set_score - score
+        else:
+            db[b] += score - set_score
+    
+    for a, b in mbti_list:
+        if db[a] > db[b]:
+            answer += a
+        elif db[a] < db[b]:
+            answer += b
+        else:
+            if ord(a) < ord(b):
+                answer += a
+            else:
+                answer += b
+    return answer
