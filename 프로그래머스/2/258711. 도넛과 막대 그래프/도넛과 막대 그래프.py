@@ -43,9 +43,9 @@ def solution(edges):
             
         elif out_db[i] == 0 and in_db[i] >= 1:
             list_graph += 1
-            
-    donut_graph = out_db[node] - (eight_graph + list_graph)
-    
+        
+        donut_graph = out_db[node] - eight_graph - list_graph
+        
     answer.append(node)                       
     answer.append(donut_graph)
     answer.append(list_graph)
