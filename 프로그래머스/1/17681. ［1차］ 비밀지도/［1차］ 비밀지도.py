@@ -1,18 +1,26 @@
-"""
-n = 한 변의 길이
-벽 = #, 공백 = ""
+from collections import deque
 
-1. 숫자를 이진수로 변환
-2. 1 을 #로, 0을 공백으로 변경
-3. arr1 과 arr2 를 겹쳐서 최종 배열 완성
-"""
 def solution(n, arr1, arr2):
     answer = []
-    for a, b in zip(arr1, arr2):
-        row = bin(a | b)[2:]
-        row = row.zfill(n)
-        
-        row = row.replace('1', '#').replace('0', ' ')
-        answer.append(row)
     
+    def convert_binary(num):
+        binary_code = deque()
+        while num > 0:
+            num, data = divmod(num, 2)
+            binary_code.appendleft(data)
+        while len(binary_code) < n:
+            binary_code.appendleft(0)
+        return binary_code
+    
+    for i in range(n):
+        b1 = convert_binary(arr1[i])
+        b2 = convert_binary(arr2[i])
+        data = ""
+        for bit1, bit2 in zip(b1, b2):
+            if bit1 or bit2:
+                data += "#"
+            else:
+                data += " "
+        answer.append(data)
+        
     return answer
