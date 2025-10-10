@@ -1,21 +1,15 @@
-"""
-"""
 from collections import defaultdict
-
 def solution(s):
     answer = []
+    s = s[2:-2]
+    s = s.split("},{")
     db = defaultdict(int)
-
-    s1 = s[2:len(s)-2].split('},{')
-    s_list = list(map(int ,item.split(",")) for item in s1)
-    
-    for data in s_list:
-        for num in data:
+    for tup in s:
+        tup = tup.split(",")
+        for num in tup:
             db[num] += 1
-    
-    sorted_db = sorted(db.items(), key=lambda x: -x[1])
-    
-    for key, _ in sorted_db:
-        answer.append(key)
 
+    for key, value in sorted(db.items(), key=lambda x: x[1], reverse=True):
+        answer.append(int(key))
+        
     return answer
